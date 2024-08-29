@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract VotingSystem is ERC20, Ownable {
     uint256 public proposalCount;
+    mapping(uint256 => Proposal) public proposals;
 
     constructor() ERC20("VoteToken", "VTK") Ownable(msg.sender) {}
 
@@ -14,11 +15,53 @@ contract VotingSystem is ERC20, Ownable {
         uint256 id;
         address proposer;
         string description;
+
         uint256 yesVotes;
         uint256 noVotes;
         mapping (address => bool) hasVoted;
     }
 
-    mapping(uint256 => Proposal) public proposals;
+    // create submit proposal function, the proposal is incremented everytime by one
+
+    // function createProposal(string memory description) public {
+    //     Proposal memory proposal = Proposal(msg.sender, description, proposalCount);
+    //     proposals[msg.sender] = proposal;
+    //     proposalCount++;
+    // }
+
+    function createProposal(string memory description) public {
+        Proposal storage proposal = proposals[proposalCount];
+
+        proposal.id = proposalCount;
+        proposal.proposer = msg.sender;
+        proposal.description = description;
+
+        proposalCount++;
+    }
+
+    // function getProposal() {
+
+    // }
+
+    // function getProposal() public view returns (Proposal memory) {
+    //     return proposals[msg.sender];
+    // }
+
+    // 2- mint
+    // only owner can mint
+
+    function mint(address to, uint amount) public onlyOwner {  // onlyOwner from "Ownable"
+        _mint(to, amount * 10**18);  // _mint from "ERC20"
+    }
+
+    // 3- vote
+    // check if the voter has a token check if the balance is greater than 0
+    // check if the voter has voted
+    // the function takes a proposal id and a boolean value to check if the vote is yes or no
+    function vote(uint256 proposalId, bool isYes) public {
+        
+    }
+
+    // balanceOf(address)
 
 }
