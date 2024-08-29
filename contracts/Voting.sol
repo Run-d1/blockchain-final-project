@@ -58,10 +58,25 @@ contract VotingSystem is ERC20, Ownable {
     // check if the voter has a token check if the balance is greater than 0
     // check if the voter has voted
     // the function takes a proposal id and a boolean value to check if the vote is yes or no
+
+
+    // function vote(uint256 proposalId, bool isYes) public {
+    // // use balanceOf(address)
+    // }
+
+
     function vote(uint256 proposalId, bool isYes) public {
-        
+        Proposal storage proposal = proposals[proposalId];
+
+        require(balanceOf(msg.sender) > 0, "You Don't have Tokens");
+        require(proposal.hasVoted[msg.sender] == false, "You've already voted");
+
+        if (isYes) {
+            proposal.yesVotes++;
+        } else {
+            proposal.noVotes++;
+        }
+
+        proposal.hasVoted[msg.sender] = true;
     }
-
-    // balanceOf(address)
-
 }
