@@ -43,7 +43,7 @@ describe("Voting", function () {
   });
 
 
-  it("Should increment proposalCount when creating one", async function () {
+  it("Should increment proposalCount when creating new proposal", async function () {
     const Voting = await hre.ethers.getContractFactory("VotingSystem");
     const voting = await Voting.deploy();
     await voting.waitForDeployment();
@@ -77,7 +77,7 @@ describe("Voting", function () {
   });
 
 
-  it("Should allow only the owners to mint tokens", async function () {
+  it("Should allow only the owner to mint tokens", async function () {
     const Voting = await hre.ethers.getContractFactory("VotingSystem");
     const voting = await Voting.deploy();
     await voting.waitForDeployment();
